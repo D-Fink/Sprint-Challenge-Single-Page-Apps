@@ -7,10 +7,10 @@ export default function SearchForm(props) {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    const results = props.characters.filter(character =>
+    const result = props.characters.filter(character =>
       character.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setSearchResults(results);
+      setSearchResults(result);
   }, [searchTerm]);
 
   const handleChange = event => {
