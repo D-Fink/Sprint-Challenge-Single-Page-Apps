@@ -1,16 +1,47 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom";
+import axios from "axios";
+import styled from 'styled-components';
+import SearchForm from './SearchForm';
 
-export default function CharacterList() {
-  // TODO: Add useState to track data from useEffect
+const CharacterContainer = styled.div`
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+`;
+const Title = styled.div`
+width: 40%;
+`;
+
+
+export default function CharacterList(props) {
+  const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    // TODO: Add API Request here - must run in `useEffect`
-    //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
+    const getCharacters = () => {
+      axios
+      .get("https://rickandmortyapi.com/api/character")
+      .then(response => {
+        console.log(response.data.results)
+        setCharacters(response.data.results);
+      })
+      .catch(error => {
+        console.error('Wubba lubba dub dub, you made an error.', error);
+      })
+    }
+    getCharacters();
   }, []);
 
   return (
     <section className="character-list">
-      <h2>TODO: `array.map()` over your state here!</h2>
+      <SearchForm {...props} CharacterList={CharacterList}></SearchForm>
+      <CharacterContainer>{characters.map(character => (
+        <Title>
+          <Link to={`/characters/${character.id}`}>
+            <h2 key={character.id}>{character.name}</h2>
+          </Link>
+        </Title>
+      ))}</CharacterContainer>
     </section>
   );
 }
