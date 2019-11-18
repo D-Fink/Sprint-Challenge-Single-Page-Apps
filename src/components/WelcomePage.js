@@ -1,4 +1,13 @@
 import React from "react";
+import {Link} from "react-router-dom";
+import styled from 'styled-components';
+
+const ListLink = styled(Link)`
+  text-align: center;
+  font-size: 30px;
+  color: black;
+  margin-left: 40%;
+`;
 
 export default function WelcomePage() {
   return (
@@ -11,6 +20,7 @@ export default function WelcomePage() {
           alt="rick"
         />
       </header>
+      <ListLink to={"/characters"}>Character List</ListLink>
     </section>
   );
 }
